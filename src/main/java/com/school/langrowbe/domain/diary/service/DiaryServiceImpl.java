@@ -1,4 +1,13 @@
+/* 
+ * Copyright (c) 나경 
+ */
 package com.school.langrowbe.domain.diary.service;
+
+import jakarta.transaction.Transactional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import com.school.langrowbe.domain.diary.dto.request.DiaryCreateRequest;
 import com.school.langrowbe.domain.diary.dto.response.DiaryResponse;
@@ -11,11 +20,8 @@ import com.school.langrowbe.domain.user.exception.UserErrorCode;
 import com.school.langrowbe.domain.user.repository.UserRepository;
 import com.school.langrowbe.global.exception.CustomException;
 import com.school.langrowbe.global.security.SecurityUtil;
-import jakarta.transaction.Transactional;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -29,8 +35,10 @@ public class DiaryServiceImpl implements DiaryService {
   @Override
   public DiaryResponse create(DiaryCreateRequest request) {
     Long userId = SecurityUtil.getCurrentUserId();
-    User user = userRepository.findById(userId)
-        .orElseThrow(() -> new CustomException(UserErrorCode.USER_NOT_FOUND));
+    User user =
+        userRepository
+            .findById(userId)
+            .orElseThrow(() -> new CustomException(UserErrorCode.USER_NOT_FOUND));
 
     Diary diary = diaryMapper.toEntity(user, request);
     Diary saved = diaryRepository.save(diary);
@@ -43,8 +51,10 @@ public class DiaryServiceImpl implements DiaryService {
   @Override
   public DiaryResponse get(Long diaryId) {
     Long userId = SecurityUtil.getCurrentUserId();
-    Diary diary = diaryRepository.findById(diaryId)
-        .orElseThrow(() -> new CustomException(DiaryErrorCode.DIARY_NOT_FOUND));
+    Diary diary =
+        diaryRepository
+            .findById(diaryId)
+            .orElseThrow(() -> new CustomException(DiaryErrorCode.DIARY_NOT_FOUND));
 
     if (!diary.getUser().getId().equals(userId)) {
       throw new CustomException(DiaryErrorCode.NO_PERMISSION);
@@ -55,15 +65,18 @@ public class DiaryServiceImpl implements DiaryService {
   @Override
   public Page<DiaryResponse> getMyDiaries(Pageable pageable) {
     Long userId = SecurityUtil.getCurrentUserId();
-    return diaryRepository.findByUser_IdOrderByCreatedAtDesc(userId, pageable)
+    return diaryRepository
+        .findByUser_IdOrderByCreatedAtDesc(userId, pageable)
         .map(diaryMapper::toResponse);
   }
 
   @Override
   public void delete(Long diaryId) {
     Long userId = SecurityUtil.getCurrentUserId();
-    Diary diary = diaryRepository.findByIdAndUser_Id(diaryId, userId)
-        .orElseThrow(() -> new CustomException(DiaryErrorCode.DIARY_NOT_FOUND));
+    Diary diary =
+        diaryRepository
+            .findByIdAndUser_Id(diaryId, userId)
+            .orElseThrow(() -> new CustomException(DiaryErrorCode.DIARY_NOT_FOUND));
 
     diaryRepository.delete(diary);
 

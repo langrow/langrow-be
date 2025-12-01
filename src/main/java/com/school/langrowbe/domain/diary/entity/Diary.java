@@ -1,7 +1,10 @@
+/* 
+ * Copyright (c) 나경 
+ */
 package com.school.langrowbe.domain.diary.entity;
 
-import com.school.langrowbe.domain.user.entity.User;
-import com.school.langrowbe.global.common.BaseTimeEntity;
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,7 +16,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
+
+import com.school.langrowbe.domain.user.entity.User;
+import com.school.langrowbe.global.common.BaseTimeEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,10 +33,9 @@ import lombok.NoArgsConstructor;
 @Table(
     name = "diary",
     indexes = {
-        @Index(name = "idx_diary_user", columnList = "user_id"),
-        @Index(name = "idx_diary_entry_date", columnList = "entry_date")
-    }
-)
+      @Index(name = "idx_diary_user", columnList = "user_id"),
+      @Index(name = "idx_diary_entry_date", columnList = "entry_date")
+    })
 public class Diary extends BaseTimeEntity {
 
   @Id

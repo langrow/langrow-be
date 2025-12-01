@@ -1,9 +1,14 @@
+/* 
+ * Copyright (c) 나경 
+ */
 package com.school.langrowbe.domain.diary.exception;
 
+import org.springframework.http.HttpStatus;
+
 import com.school.langrowbe.global.exception.model.BaseErrorCode;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
 
 @Getter
 @AllArgsConstructor
