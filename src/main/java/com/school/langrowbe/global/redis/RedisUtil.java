@@ -1,7 +1,7 @@
 /* 
- * Copyright (c) WIT Global 
+ * Copyright (c) 나경 
  */
-package com.wit.payment.global.redis;
+package com.school.langrowbe.global.redis;
 
 import java.time.Duration;
 

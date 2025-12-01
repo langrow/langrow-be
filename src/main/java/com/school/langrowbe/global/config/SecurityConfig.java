@@ -1,7 +1,7 @@
 /* 
- * Copyright (c) WIT Global 
+ * Copyright (c) 나경 
  */
-package com.wit.payment.global.config;
+package com.school.langrowbe.global.config;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.wit.payment.global.security.JwtAuthenticationFilter;
+import com.school.langrowbe.global.security.JwtAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -47,12 +47,12 @@ public class SecurityConfig {
                               .getWriter()
                               .write(
                                   """
-                          {
-                            "success": false,
-                            "code": 401,
-                            "message": "로그인이 필요합니다."
-                          }
-                          """);
+                                      {
+                                        "success": false,
+                                        "code": 401,
+                                        "message": "로그인이 필요합니다."
+                                      }
+                                      """);
                         })
                     .accessDeniedHandler(
                         (request, response, ex) -> {
@@ -63,12 +63,12 @@ public class SecurityConfig {
                               .getWriter()
                               .write(
                                   """
-                          {
-                            "success": false,
-                            "code": 403,
-                            "message": "접근 권한이 없습니다."
-                          }
-                          """);
+                                      {
+                                        "success": false,
+                                        "code": 403,
+                                        "message": "접근 권한이 없습니다."
+                                      }
+                                      """);
                         }))
         .authorizeHttpRequests(
             auth ->
@@ -80,16 +80,6 @@ public class SecurityConfig {
                         "/swagger-ui/**",
                         "/v3/api-docs/**")
                     .permitAll()
-
-                    // 키오스크용 API
-                    .requestMatchers(
-                        "/api/products/{product-id}",
-                        "/api/categories/{category-id}/products",
-                        "/api/categories",
-                        "/api/categories/first")
-                    .permitAll()
-                    .requestMatchers("/api/admin/**")
-                    .hasRole("ADMIN")
                     .anyRequest()
                     .authenticated())
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

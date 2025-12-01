@@ -1,7 +1,7 @@
 /* 
- * Copyright (c) WIT Global 
+ * Copyright (c) 나경 
  */
-package com.wit.payment.global.jwt;
+package com.school.langrowbe.global.jwt;
 
 import java.security.Key;
 import java.util.Base64;
@@ -13,8 +13,8 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.wit.payment.domain.auth.exception.AuthErrorCode;
-import com.wit.payment.global.exception.CustomException;
+import com.school.langrowbe.domain.auth.exception.AuthErrorCode;
+import com.school.langrowbe.global.exception.CustomException;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -53,14 +53,13 @@ public class JwtProvider {
   }
 
   /**
-   * 사용자 정보(userId, loginId, role)를 기반으로 AccessToken을 생성합니다.
+   * 사용자 정보(userId, loginId)를 기반으로 AccessToken을 생성합니다.
    *
    * @param userId 사용자 PK
    * @param loginId 로그인 아이디
-   * @param role 사용자 역할 (USER / ADMIN)
    */
-  public String createAccessToken(Long userId, String loginId, String role) {
-    return createToken(userId, loginId, role, accessTokenExpireTime);
+  public String createAccessToken(Long userId, String loginId) {
+    return createToken(userId, loginId, accessTokenExpireTime);
   }
 
   /**
@@ -69,7 +68,7 @@ public class JwtProvider {
    * @param userId 사용자 PK
    */
   public String createRefreshToken(Long userId) {
-    return createToken(userId, null, null, refreshTokenExpireTime);
+    return createToken(userId, null, refreshTokenExpireTime);
   }
 
   /**
@@ -77,10 +76,9 @@ public class JwtProvider {
    *
    * @param userId 사용자 PK (subject)
    * @param loginId 로그인 아이디 (AccessToken에만 사용, RefreshToken이면 null 가능)
-   * @param role 사용자 역할 (AccessToken에만 사용, RefreshToken이면 null 가능)
    * @param expireTimeMillis 만료 시간(ms)
    */
-  private String createToken(Long userId, String loginId, String role, long expireTimeMillis) {
+  private String createToken(Long userId, String loginId, long expireTimeMillis) {
     Date now = new Date();
 
     var builder =
@@ -91,12 +89,9 @@ public class JwtProvider {
             .setExpiration(new Date(now.getTime() + expireTimeMillis))
             .signWith(key, SignatureAlgorithm.HS256);
 
-    // AccessToken인 경우에만 loginId, role을 claim으로 추가
+    // AccessToken인 경우에만 loginId를 claim으로 추가
     if (loginId != null) {
       builder.claim("loginId", loginId);
-    }
-    if (role != null) {
-      builder.claim("role", role);
     }
 
     return builder.compact();
@@ -132,11 +127,6 @@ public class JwtProvider {
   /** 토큰에서 loginId를 추출합니다. (AccessToken 전용) */
   public String extractLoginId(String token) {
     return parseClaims(token).get("loginId", String.class);
-  }
-
-  /** 토큰에서 역할(role)을 추출합니다. (AccessToken 전용) */
-  public String extractRole(String token) {
-    return parseClaims(token).get("role", String.class);
   }
 
   /** 토큰의 jti(id)를 추출합니다. */

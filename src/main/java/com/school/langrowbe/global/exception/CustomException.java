@@ -1,9 +1,9 @@
 /* 
- * Copyright (c) WIT Global 
+ * Copyright (c) 나경 
  */
-package com.wit.payment.global.exception;
+package com.school.langrowbe.global.exception;
 
-import com.wit.payment.global.exception.model.BaseErrorCode;
+import com.school.langrowbe.global.exception.model.BaseErrorCode;
 
 import lombok.Getter;
 

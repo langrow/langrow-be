@@ -1,7 +1,7 @@
 /* 
- * Copyright (c) WIT Global 
+ * Copyright (c) 나경 
  */
-package com.wit.payment.global.security;
+package com.school.langrowbe.global.security;
 
 import java.io.IOException;
 
@@ -15,8 +15,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.wit.payment.global.jwt.JwtProvider;
-import com.wit.payment.global.redis.RedisUtil;
+import com.school.langrowbe.global.jwt.JwtProvider;
+import com.school.langrowbe.global.redis.RedisUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,9 +47,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
       Long userId = jwtProvider.extractUserId(token);
       String loginId = jwtProvider.extractLoginId(token);
-      String role = jwtProvider.extractRole(token);
 
-      CustomUserDetails userDetails = new CustomUserDetails(userId, loginId, role);
+      CustomUserDetails userDetails = new CustomUserDetails(userId, loginId);
 
       UsernamePasswordAuthenticationToken authentication =
           new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
