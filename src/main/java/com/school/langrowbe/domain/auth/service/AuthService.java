@@ -1,13 +1,13 @@
 /* 
- * Copyright (c) WIT Global 
+ * Copyright (c) 나경 
  */
-package com.wit.payment.domain.auth.service;
+package com.school.langrowbe.domain.auth.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import com.wit.payment.domain.user.dto.request.LoginRequest;
-import com.wit.payment.domain.user.dto.response.UserResponse;
+import com.school.langrowbe.domain.user.dto.request.LoginRequest;
+import com.school.langrowbe.domain.user.dto.response.UserResponse;
 
 /** 로그인, 로그아웃, 토큰 재발급 등을 처리하는 인증 서비스 인터페이스입니다. */
 public interface AuthService {

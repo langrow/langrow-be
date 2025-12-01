@@ -1,7 +1,7 @@
 /* 
- * Copyright (c) WIT Global 
+ * Copyright (c) 나경 
  */
-package com.wit.payment.domain.user.controller;
+package com.school.langrowbe.domain.user.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -9,10 +9,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wit.payment.domain.user.dto.request.InfoRequest;
-import com.wit.payment.domain.user.dto.response.UserResponse;
-import com.wit.payment.domain.user.service.UserService;
-import com.wit.payment.global.response.BaseResponse;
+import com.school.langrowbe.domain.user.dto.request.InfoRequest;
+import com.school.langrowbe.domain.user.dto.response.UserResponse;
+import com.school.langrowbe.domain.user.service.UserService;
+import com.school.langrowbe.global.response.BaseResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,6 +32,12 @@ public class UserControllerImpl implements UserController {
   public ResponseEntity<BaseResponse<UserResponse>> getMyInfo() {
     UserResponse response = userService.getMyInfo();
     return ResponseEntity.ok(BaseResponse.success("내 정보 조회에 성공했습니다.", response));
+  }
+
+  @Override
+  public ResponseEntity<BaseResponse<UserResponse>> updateMyInfo(InfoRequest request) {
+    UserResponse response = userService.updateMyInfo(request);
+    return ResponseEntity.ok(BaseResponse.success(response));
   }
 
   @Override

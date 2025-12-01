@@ -1,11 +1,11 @@
 /* 
- * Copyright (c) WIT Global 
+ * Copyright (c) 나경 
  */
-package com.wit.payment.domain.user.exception;
+package com.school.langrowbe.domain.user.exception;
 
 import org.springframework.http.HttpStatus;
 
-import com.wit.payment.global.exception.model.BaseErrorCode;
+import com.school.langrowbe.global.exception.model.BaseErrorCode;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

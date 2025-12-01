@@ -1,7 +1,7 @@
 /* 
- * Copyright (c) WIT Global 
+ * Copyright (c) 나경 
  */
-package com.wit.payment.domain.user.controller;
+package com.school.langrowbe.domain.user.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,12 +11,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.wit.payment.domain.user.dto.request.InfoRequest;
-import com.wit.payment.domain.user.dto.response.UserResponse;
-import com.wit.payment.global.response.BaseResponse;
+import com.school.langrowbe.domain.user.dto.request.InfoRequest;
+import com.school.langrowbe.domain.user.dto.response.UserResponse;
+import com.school.langrowbe.global.response.BaseResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,6 +34,10 @@ public interface UserController {
   @Operation(summary = "내 정보 조회 API", description = "현재 로그인한 사용자의 기본 정보를 조회합니다.")
   @GetMapping
   ResponseEntity<BaseResponse<UserResponse>> getMyInfo();
+
+  @Operation(summary = "내 정보 수정 API", description = "현재 로그인한 사용자의 프로필을 전체 갱신합니다.")
+  @PutMapping
+  ResponseEntity<BaseResponse<UserResponse>> updateMyInfo(@RequestBody @Valid InfoRequest request);
 
   @Operation(summary = "회원 탈퇴 API", description = "현재 로그인한 사용자를 탈퇴 처리합니다.")
   @DeleteMapping

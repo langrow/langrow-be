@@ -1,7 +1,7 @@
 /* 
- * Copyright (c) WIT Global 
+ * Copyright (c) 나경 
  */
-package com.wit.payment.domain.auth.service;
+package com.school.langrowbe.domain.auth.service;
 
 import java.time.Duration;
 
@@ -16,16 +16,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.wit.payment.domain.auth.exception.AuthErrorCode;
-import com.wit.payment.domain.user.dto.request.LoginRequest;
-import com.wit.payment.domain.user.dto.response.UserResponse;
-import com.wit.payment.domain.user.entity.User;
-import com.wit.payment.domain.user.mapper.UserMapper;
-import com.wit.payment.domain.user.repository.UserRepository;
-import com.wit.payment.global.exception.CustomException;
-import com.wit.payment.global.jwt.JwtProvider;
-import com.wit.payment.global.redis.RedisUtil;
-import com.wit.payment.global.security.SecurityUtil;
+import com.school.langrowbe.domain.auth.exception.AuthErrorCode;
+import com.school.langrowbe.domain.user.dto.request.LoginRequest;
+import com.school.langrowbe.domain.user.dto.response.UserResponse;
+import com.school.langrowbe.domain.user.entity.User;
+import com.school.langrowbe.domain.user.mapper.UserMapper;
+import com.school.langrowbe.domain.user.repository.UserRepository;
+import com.school.langrowbe.global.exception.CustomException;
+import com.school.langrowbe.global.jwt.JwtProvider;
+import com.school.langrowbe.global.redis.RedisUtil;
+import com.school.langrowbe.global.security.SecurityUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,11 +53,7 @@ public class AuthServiceImpl implements AuthService {
     User user = validateUserCredentials(loginRequest);
     UserResponse userResponse = issueTokensAndSetResponse(user, response);
 
-    log.info(
-        "로그인 성공 - userId: {}, loginId: {}, role: {}",
-        user.getId(),
-        user.getLoginId(),
-        user.getRole());
+    log.info("로그인 성공 - userId: {}, loginId: {}", user.getId(), user.getLoginId());
     return userResponse;
   }
 
@@ -104,8 +100,7 @@ public class AuthServiceImpl implements AuthService {
             .findById(userId)
             .orElseThrow(() -> new CustomException(AuthErrorCode.AUTHENTICATION_NOT_FOUND));
 
-    String newAccessToken =
-        jwtProvider.createAccessToken(user.getId(), user.getLoginId(), user.getRole().name());
+    String newAccessToken = jwtProvider.createAccessToken(user.getId(), user.getLoginId());
     setAccessTokenHeader(response, newAccessToken);
 
     log.info("액세스 토큰 재발급 성공 - userId: {}", userId);
@@ -138,8 +133,7 @@ public class AuthServiceImpl implements AuthService {
 
   /** AccessToken/RefreshToken 발급 + 응답 세팅 + UserResponse 생성 */
   private UserResponse issueTokensAndSetResponse(User user, HttpServletResponse response) {
-    String accessToken =
-        jwtProvider.createAccessToken(user.getId(), user.getLoginId(), user.getRole().name());
+    String accessToken = jwtProvider.createAccessToken(user.getId(), user.getLoginId());
     String refreshToken = jwtProvider.createRefreshToken(user.getId());
 
     long refreshTokenExpireSeconds = jwtProvider.getRefreshTokenExpireTime() / 1000;
