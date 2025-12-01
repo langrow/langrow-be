@@ -3,8 +3,7 @@
  */
 package com.school.langrowbe.domain.diary.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
 
 import com.school.langrowbe.domain.diary.dto.request.DiaryCreateRequest;
 import com.school.langrowbe.domain.diary.dto.response.DiaryResponse;
@@ -25,22 +24,19 @@ public interface DiaryService {
   /**
    * 일기 단건을 조회합니다.
    *
-   * <p>- 기본 정책상 소유자 본인만 접근 가능합니다.
-   *
    * @param diaryId 조회할 일기의 식별자
    * @return 일기 정보 응답
    */
   DiaryResponse get(Long diaryId);
 
   /**
-   * 현재 로그인한 사용자가 작성한 모든 일기를 페이지 단위로 조회합니다.
+   * 현재 로그인한 사용자가 작성한 모든 일기를 조회합니다(비페이징).
    *
-   * <p>- 정렬 기본값은 컨트롤러/레포지토리 레벨에서 {@code createdAt DESC}를 권장합니다.
+   * <p>- 정렬: 생성 시각 기준 내림차순(createdAt DESC).
    *
-   * @param pageable 페이지/정렬 정보
-   * @return 내 일기 목록 페이지 응답
+   * @return 내 일기 목록
    */
-  Page<DiaryResponse> getMyDiaries(Pageable pageable);
+  List<DiaryResponse> getMyDiaries();
 
   /**
    * 일기를 삭제합니다.
