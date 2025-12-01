@@ -132,4 +132,14 @@ public class User {
       this.diaryCount--;
     }
   }
+
+  public void increaseFriendCount() {
+    this.friendCount++;
+  }
+
+  public void decreaseFriendCountSafely() {
+    if (this.friendCount > 0) {
+      this.friendCount--;
+    }
+  }
 }
