@@ -1,13 +1,13 @@
 /* 
- * Copyright (c) WIT Global 
+ * Copyright (c) 나경 
  */
-package com.wit.payment.domain.user.repository;
+package com.school.langrowbe.domain.user.repository;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.wit.payment.domain.user.entity.User;
+import com.school.langrowbe.domain.user.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 

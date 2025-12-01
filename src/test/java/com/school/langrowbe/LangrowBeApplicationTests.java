@@ -1,3 +1,6 @@
+/* 
+ * Copyright (c) 나경 
+ */
 package com.school.langrowbe;
 
 import org.junit.jupiter.api.Test;

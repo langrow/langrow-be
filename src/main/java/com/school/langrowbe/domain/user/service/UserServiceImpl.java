@@ -1,7 +1,7 @@
 /* 
- * Copyright (c) WIT Global 
+ * Copyright (c) 나경 
  */
-package com.wit.payment.domain.user.service;
+package com.school.langrowbe.domain.user.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,21 +10,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.wit.payment.domain.auth.service.AuthService;
-import com.wit.payment.domain.user.dto.request.InfoRequest;
-import com.wit.payment.domain.user.dto.response.UserResponse;
-import com.wit.payment.domain.user.entity.Role;
-import com.wit.payment.domain.user.entity.User;
-import com.wit.payment.domain.user.exception.UserErrorCode;
-import com.wit.payment.domain.user.mapper.UserMapper;
-import com.wit.payment.domain.user.repository.UserRepository;
-import com.wit.payment.global.exception.CustomException;
-import com.wit.payment.global.security.SecurityUtil;
+import com.school.langrowbe.domain.auth.service.AuthService;
+import com.school.langrowbe.domain.user.dto.request.InfoRequest;
+import com.school.langrowbe.domain.user.dto.response.UserResponse;
+import com.school.langrowbe.domain.user.entity.User;
+import com.school.langrowbe.domain.user.exception.UserErrorCode;
+import com.school.langrowbe.domain.user.mapper.UserMapper;
+import com.school.langrowbe.domain.user.repository.UserRepository;
+import com.school.langrowbe.global.exception.CustomException;
+import com.school.langrowbe.global.security.SecurityUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-/** 회원 관련 비즈니스 로직을 구현한 서비스 클래스입니다. */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -38,22 +36,17 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserResponse register(InfoRequest request) {
-
+    // 로그인 아이디 중복 체크
     if (userRepository.existsByLoginId(request.loginId())) {
       log.warn("회원가입 실패 - 중복 loginId: {}", request.loginId());
       throw new CustomException(UserErrorCode.DUPLICATE_LOGIN_ID);
     }
 
+    // 비밀번호 인코딩 후 엔티티 생성
     String encodedPassword = passwordEncoder.encode(request.password());
+    User user = userMapper.toUser(request, encodedPassword);
 
-    User user =
-        User.builder()
-            .loginId(request.loginId())
-            .password(encodedPassword)
-            .name(request.name())
-            .role(Role.USER)
-            .build();
-
+    // 저장
     User saved = userRepository.save(user);
     log.info("회원가입 성공 - userId: {}, loginId: {}", saved.getId(), saved.getLoginId());
 
@@ -75,6 +68,22 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public UserResponse updateMyInfo(InfoRequest request) {
+    Long currentUserId = SecurityUtil.getCurrentUserId();
+
+    User user =
+        userRepository
+            .findById(currentUserId)
+            .orElseThrow(() -> new CustomException(UserErrorCode.USER_NOT_FOUND));
+
+    // 전체 갱신 (null 체크 없이 덮어쓰기 전제)
+    userMapper.applyProfileUpdateStrict(user, request);
+
+    log.info("내 정보 수정(put) - userId: {}, loginId: {}", user.getId(), user.getLoginId());
+    return userMapper.toResponse(user);
+  }
+
+  @Override
   public void deleteMyAccount(HttpServletRequest request, HttpServletResponse response) {
     Long currentUserId = SecurityUtil.getCurrentUserId();
 
@@ -85,6 +94,7 @@ public class UserServiceImpl implements UserService {
 
     authService.invalidateCurrentSessionQuietly(request, response);
 
+    // 삭제
     userRepository.delete(user);
     log.info("회원 탈퇴 완료 - userId: {}, loginId: {}", user.getId(), user.getLoginId());
   }

@@ -1,7 +1,7 @@
 /* 
- * Copyright (c) WIT Global 
+ * Copyright (c) 나경 
  */
-package com.wit.payment.global.exception.model;
+package com.school.langrowbe.global.exception.model;
 
 import org.springframework.http.HttpStatus;
 

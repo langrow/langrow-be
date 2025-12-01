@@ -1,13 +1,12 @@
 /* 
- * Copyright (c) WIT Global 
+ * Copyright (c) 나경 
  */
-package com.wit.payment.global.security;
+package com.school.langrowbe.global.security;
 
 import java.util.Collection;
 import java.util.Collections;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Getter;
@@ -19,11 +18,10 @@ public class CustomUserDetails implements UserDetails {
 
   private final Long userId; // DB PK
   private final String loginId; // 로그인 아이디
-  private final String role; // USER / ADMIN
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role));
+    return Collections.emptyList();
   }
 
   @Override

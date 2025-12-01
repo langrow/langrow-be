@@ -1,7 +1,7 @@
 /* 
- * Copyright (c) WIT Global 
+ * Copyright (c) 나경 
  */
-package com.wit.payment.global.common;
+package com.school.langrowbe.global.common;
 
 import java.time.LocalDateTime;
 

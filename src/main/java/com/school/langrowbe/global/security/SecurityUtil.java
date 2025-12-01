@@ -1,7 +1,7 @@
 /* 
- * Copyright (c) WIT Global 
+ * Copyright (c) 나경 
  */
-package com.wit.payment.global.security;
+package com.school.langrowbe.global.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -9,8 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import com.wit.payment.domain.auth.exception.AuthErrorCode;
-import com.wit.payment.global.exception.CustomException;
+import com.school.langrowbe.domain.auth.exception.AuthErrorCode;
+import com.school.langrowbe.global.exception.CustomException;
 
 @Component
 public class SecurityUtil {

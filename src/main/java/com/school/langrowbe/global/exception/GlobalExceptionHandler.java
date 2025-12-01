@@ -1,7 +1,7 @@
 /* 
- * Copyright (c) WIT Global 
+ * Copyright (c) 나경 
  */
-package com.wit.payment.global.exception;
+package com.school.langrowbe.global.exception;
 
 import java.util.stream.Collectors;
 
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-import com.wit.payment.global.exception.model.BaseErrorCode;
-import com.wit.payment.global.response.BaseResponse;
+import com.school.langrowbe.global.exception.model.BaseErrorCode;
+import com.school.langrowbe.global.response.BaseResponse;
 
 import lombok.extern.slf4j.Slf4j;
 

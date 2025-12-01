@@ -1,7 +1,7 @@
 /* 
- * Copyright (c) WIT Global 
+ * Copyright (c) 나경 
  */
-package com.wit.payment.domain.auth.controller;
+package com.school.langrowbe.domain.auth.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,10 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wit.payment.domain.auth.service.AuthService;
-import com.wit.payment.domain.user.dto.request.LoginRequest;
-import com.wit.payment.domain.user.dto.response.UserResponse;
-import com.wit.payment.global.response.BaseResponse;
+import com.school.langrowbe.domain.auth.service.AuthService;
+import com.school.langrowbe.domain.user.dto.request.LoginRequest;
+import com.school.langrowbe.domain.user.dto.response.UserResponse;
+import com.school.langrowbe.global.response.BaseResponse;
 
 import lombok.RequiredArgsConstructor;
 
