@@ -1,7 +1,11 @@
-/*
- * Copyright (c) 나경
+/* 
+ * Copyright (c) 나경 
  */
 package com.school.langrowbe.domain.user.entity;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -15,9 +19,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -128,6 +130,16 @@ public class User {
   public void decreaseDiaryCountSafely() {
     if (this.diaryCount > 0) {
       this.diaryCount--;
+    }
+  }
+
+  public void increaseFriendCount() {
+    this.friendCount++;
+  }
+
+  public void decreaseFriendCountSafely() {
+    if (this.friendCount > 0) {
+      this.friendCount--;
     }
   }
 }

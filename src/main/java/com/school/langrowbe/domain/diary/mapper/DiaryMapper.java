@@ -1,14 +1,19 @@
+/* 
+ * Copyright (c) 나경 
+ */
 package com.school.langrowbe.domain.diary.mapper;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Component;
 
 import com.school.langrowbe.domain.diary.dto.request.DiaryCreateRequest;
 import com.school.langrowbe.domain.diary.dto.response.DiaryResponse;
 import com.school.langrowbe.domain.diary.entity.Diary;
 import com.school.langrowbe.domain.user.entity.User;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Component;
 
 @Component
 public class DiaryMapper {
@@ -28,20 +33,15 @@ public class DiaryMapper {
         d.getContent(),
         d.getEntryDate(),
         d.getCreatedAt(),
-        d.getUpdatedAt()
-    );
+        d.getUpdatedAt());
   }
 
-  /**
-   * 서비스에서 편하게 쓰도록 List 변환 지원
-   */
+  /** 서비스에서 편하게 쓰도록 List 변환 지원 */
   public List<DiaryResponse> toResponseList(List<Diary> diaries) {
     return diaries.stream().map(this::toResponse).collect(Collectors.toList());
   }
 
-  /**
-   * 필요 시 Page 매핑도 제공
-   */
+  /** 필요 시 Page 매핑도 제공 */
   public Page<DiaryResponse> toResponsePage(Page<Diary> page) {
     return page.map(this::toResponse);
   }
