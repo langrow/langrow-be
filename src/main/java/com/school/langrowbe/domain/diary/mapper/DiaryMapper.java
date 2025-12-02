@@ -27,13 +27,7 @@ public class DiaryMapper {
   }
 
   public DiaryResponse toResponse(Diary d) {
-    return new DiaryResponse(
-        d.getId(),
-        d.getUser().getId(),
-        d.getContent(),
-        d.getEntryDate(),
-        d.getCreatedAt(),
-        d.getUpdatedAt());
+    return new DiaryResponse(d.getId(), d.getUser().getId(), d.getContent(), d.getEntryDate());
   }
 
   /** 서비스에서 편하게 쓰도록 List 변환 지원 */
